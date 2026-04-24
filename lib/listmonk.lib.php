@@ -297,3 +297,25 @@ function listmonk_subscribe_member($email, $name, $listId, $force = false)
 
   return listmonk_add_subscriber_to_list($subscriberId, $listId);
 }
+
+/**
+ * Build an HTML <select> element populated with Listmonk lists.
+ *
+ * @param string $name          Name attribute of the select element
+ * @param array  $lists         Array of list objects from listmonk_get_all_lists()
+ * @param int    $selectedId    Currently selected list ID
+ * @return string               HTML select element
+ */
+function listmonk_build_list_select($name, $lists, $selectedId = 0)
+{
+  $html = '<select name="' . dol_escape_htmltag($name) . '" class="flat minwidth200">';
+  $html .= '<option value="">-- Choisir une liste --</option>';
+  foreach ($lists as $list) {
+    $id = (int) $list['id'];
+    $label = dol_escape_htmltag($list['name']) . ' (ID ' . $id . ')';
+    $selected = ($id === (int) $selectedId) ? ' selected' : '';
+    $html .= '<option value="' . $id . '"' . $selected . '>' . $label . '</option>';
+  }
+  $html .= '</select>';
+  return $html;
+}

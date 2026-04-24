@@ -4,4 +4,6 @@ Integrates the [Listmonk](https://listmonk.app) self-hosted email marketing plat
 
 Provides a generic API wrapper and admin configuration page (API endpoint, username, token). Other modules can declare a dependency on this module and use the `listmonk_*` functions from `lib/listmonk.lib.php`.
 
-Only tested with Dolibarr v22.
+When the Dolibarr **Members** module is also active, a "Newsletter" tab appears on member cards to manage Listmonk subscriptions.
+
+Only tested with Dolibarr v22 and Listmonk v6.

@@ -98,8 +98,9 @@ class modListmonk extends DolibarrModules
       2 => array('LISTMONK_ACCESS_TOKEN', 'chaine', '', '', 0, 'current', 0),
     );
 
-    // No extra fields, tabs, boxes, permissions, or menus needed for this module
-    $this->tabs = array();
+    $this->tabs = array(
+      array('data' => 'member:+newsletter:Newsletter:listmonk@listmonk:isModEnabled("listmonk") && isModEnabled("adherent"):/listmonk/tabs/member_newsletter.php?id=__ID__'),
+    );
     $this->extrafields = array();
     $this->boxes = array();
     $this->rights = array();
