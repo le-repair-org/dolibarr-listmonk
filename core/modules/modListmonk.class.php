@@ -37,7 +37,7 @@ class modListmonk extends DolibarrModules
    */
   public function __construct($db)
   {
-    global $langs, $conf;
+    global $conf, $langs;
 
     $this->db = $db;
 
@@ -67,11 +67,14 @@ class modListmonk extends DolibarrModules
       'tpl' => 0,
       'barcode' => 0,
       'models' => 0,
+      'printing' => 0,
       'theme' => 0,
       'css' => array(),
       'js' => array(),
       'hooks' => array(),
       'moduleforexternal' => 0,
+      'websitetemplates' => 0,
+      'captcha' => 0,
     );
 
     // Data directories to create when module is enabled
@@ -81,13 +84,14 @@ class modListmonk extends DolibarrModules
     $this->config_page_url = array("setup.php@listmonk");
 
     // Dependencies
-    $this->hidden = 0;
+    $this->hidden = getDolGlobalInt('MODULE_LISTMONK_DISABLED');
     $this->depends = array();
     $this->requiredby = array();
     $this->conflictwith = array();
     $this->langfiles = array("listmonk@listmonk");
     $this->phpmin = array(7, 4);
-    $this->need_dolibarr_version = array(16, 0);
+    $this->need_dolibarr_version = array(22, 0);
+    $this->need_javascript_ajax = 0;
     $this->warnings_activation = array();
     $this->warnings_activation_ext = array();
 
@@ -98,11 +102,18 @@ class modListmonk extends DolibarrModules
       2 => array('LISTMONK_ACCESS_TOKEN', 'chaine', '', '', 0, 'current', 0),
     );
 
+    if (!isModEnabled('listmonk')) {
+      $conf->listmonk = new stdClass();
+      $conf->listmonk->enabled = 0;
+    }
+
     $this->tabs = array(
       array('data' => 'member:+newsletter:Newsletter:listmonk@listmonk:isModEnabled("listmonk") && isModEnabled("adherent"):/listmonk/tabs/member_newsletter.php?id=__ID__'),
     );
+    $this->dictionaries = array();
     $this->extrafields = array();
     $this->boxes = array();
+    $this->cronjobs = array();
     $this->rights = array();
     $this->menu = array();
   }
